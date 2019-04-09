@@ -363,6 +363,7 @@ class StockMoveLine(models.Model):
         intended to be called when editing a `done` move (that's what the override of `write` here
         is done.
         """
+        Quant = self.env['stock.quant']
 
         # First, we loop over all the move lines to do a preliminary check: `qty_done` should not
         # be negative and, according to the presence of a picking type or a linked inventory
@@ -416,7 +417,6 @@ class StockMoveLine(models.Model):
         done_ml = self.env['stock.move.line']
         for ml in self - ml_to_delete:
             if ml.product_id.type == 'product':
-                Quant = self.env['stock.quant']
                 rounding = ml.product_uom_id.rounding
 
                 # if this move line is force assigned, unreserve elsewhere if needed

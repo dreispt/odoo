@@ -1128,7 +1128,7 @@ class StockMove(models.Model):
                         except UserError:
                             pass
                 move._unreserve_initial_demand(new_move)
-            move.move_line_ids._action_done()
+        moves_todo.mapped('move_line_ids')._action_done()
         # Check the consistency of the result packages; there should be an unique location across
         # the contained quants.
         for result_package in moves_todo\
@@ -1147,7 +1147,6 @@ class StockMove(models.Model):
 
         if picking:
             picking._create_backorder()
-
         return moves_todo
 
     def unlink(self):
